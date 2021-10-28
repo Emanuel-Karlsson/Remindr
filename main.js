@@ -404,9 +404,9 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 //Display tasks
 document.addEventListener("DOMContentLoaded", applicationStart)
 
-function applicationStart(){
+function applicationStart() {
     TaskUI.displayTasks();
-    MovieUI.displayMovies();
+    MovieUI.displayDemoMovies();
 }
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
@@ -454,43 +454,110 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-class Movie{
-    constructor(title, description, length, rating, seen){
+class Movie {
+    constructor(id, title, description, length, rating, seen) {
 
     }
 
 }
 
-class MovieUI{
+class MovieUI {
 
- static displayMovies(){
+    static displayDemoMovies() {
+        const StoredMovies = [
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the philosopher's stone",
+                description: "An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.",
+                length: "152min",
+                rating: "7.6",
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the chamber of secrets",
+                description: "An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.",
+                length: "152min",
+                rating: "7.6",
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the prisoner of Azkaban",
+                description: "Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.",
+                length: "152min",
+                rating: "7.6",
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the goblet of fire",
+                description: "Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.",
+                length: "152min",
+                rating: "7.6",
+                seen: false
+            }
+        ];
 
-    const movies = MovieStore.getMovies();
+        const movies = StoredMovies;
+
+        movies.forEach(movie => {
+            MovieUI.addMovieToList(movie);
+            //MovieStore.addTask(movie);
+        })
+    }
+    static displayMovies() {
+
+        const movies = MovieStore.getMovies();
 
         movies.forEach(movie => {
             MovieUI.addMovieToList(movie);
         })
- }
+    }
 
- static addMovieToList(movie){
-    const moviesToSee = document.getElementById("task-list");
-    const seenMovies = document.getElementById("finished-task-list");
+    static addMovieToList(movie) {
+        const moviesToSee = document.getElementById("movies-to-see");
+        const seenMovies = document.getElementById("seen-movies");
 
+        let card = `
+    <div class="col-lg-4" id="card-top">
+    <p hidden id="${movie.id}">${movie.id}</p>
+    <div class="card border">
+        <div class="card-header">${movie.title}</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3 justify-content-center"><img class="img-fit-to-card" src="/Filmbilder/hp2.jpg">
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <p>${movie.description.substr(0,60)}....</p>
+                        </div>
 
-    
-
-    let card = `
-    
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-5 no-padding"><img class="icon" src="/Images/clock.png">${movie.length}</div>
+                            <div class="col-5 no-padding"><img class="icon" src="/Images/star.png">${movie.rating}</div>
+                            <div class="col no-padding"><a><img class="icon" src="/Images/Details.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 `;
 
-    if () {
-        finishedTasks.innerHTML += card;
-    } else {
-        unfinishedTasks.innerHTML += card;
+        if (movie.seen) {
+            seenMovies.innerHTML += card;
+        } else {
+            moviesToSee.innerHTML += card;
+        }
     }
- }
 }
 
-class MovieStore{
+class MovieStore {
 
 }
