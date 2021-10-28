@@ -1,0 +1,29 @@
+<div class="col-lg-4">
+    <div class="card border" id="card-top">
+        <div class="card-header">Titel</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-7">Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia incidunt esse sint,
+                    veritatis.</div>
+                <div class="col">
+                    <div class="row">
+                        <div class="col"><img src="/Images/clock.png" class="icon"> 08:00-10-00</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><img src="/Images/ice.png" class="icon"> Low prio</div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><img src="/Images/completed.jpg" class="icon"> Completed</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col border-rounded-left"><a class="btn btn-outline-light">Complete</a></div>
+                    <div class="col border"><button class="btn btn-outline-light">Edit</button></div>
+                    <div class="col border-rounded-right"><button class="btn btn-outline-light">Delete</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
