@@ -417,7 +417,7 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
         document.getElementById("filmr").classList.add("hidden");
         document.getElementById("remindr").classList.remove("hidden");
 
-        document.getElementById("add-new-movie").parentElement.classList.add("hidden");
+        document.getElementById("search-movie").parentElement.classList.add("hidden");
         document.getElementById("add-new-task").parentElement.classList.remove("hidden");
 
     } else if (e.target.id == "filmr") {
@@ -427,7 +427,7 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
         document.getElementById("filmr").classList.remove("hidden");
         document.getElementById("remindr").classList.add("hidden");
 
-        document.getElementById("add-new-movie").parentElement.classList.remove("hidden");
+        document.getElementById("search-movie").parentElement.classList.remove("hidden");
         document.getElementById("add-new-task").parentElement.classList.add("hidden");
     }
 });
@@ -455,48 +455,43 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 class Movie {
-    constructor(id, title, description, length, rating, seen) {
-
+    constructor(id, title, released, runtime, genre, director, actors, plot, poster, imdbRating, imdbVotes) {
+        this.id = id;
+        this.title = title;
+        this.released = released;
+        this.runtime = runtime;
+        this.genre = genre;
+        this.director = director;
+        this.actors = actors;
+        this.plot = plot;
+        this.poster = poster;
+        this.imdbRating = imdbRating;
+        this.imdbVotes = imdbVotes;
+        this.seen = false;
     }
 
 }
 
 class MovieUI {
 
+    //Movies for demo if you don't wanna add them yourself
     static displayDemoMovies() {
         const StoredMovies = [
             {
                 id: crypto.randomUUID(),
-                title: "Harry Potter and the philosopher's stone",
-                description: "An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.",
-                length: "152min",
-                rating: "7.6",
+                title: "Harry Potter and the deathly hallows pt2",
+                released: "15 Jul 2011",
+                runtime: "130min",
+                genre: "Adventure, Fantasy, Mystery",
+                director: "David Yates",
+                actors: "Daniel Radcliffe, Emma Watson, Rupert Grint",
+                plot: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+                poster: "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                imdbRating: "8.1",
+                imdbVotes: 806041,
                 seen: false
             },
-            {
-                id: crypto.randomUUID(),
-                title: "Harry Potter and the chamber of secrets",
-                description: "An ancient prophecy seems to be coming true when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.",
-                length: "152min",
-                rating: "7.6",
-                seen: false
-            },
-            {
-                id: crypto.randomUUID(),
-                title: "Harry Potter and the prisoner of Azkaban",
-                description: "Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.",
-                length: "152min",
-                rating: "7.6",
-                seen: false
-            },
-            {
-                id: crypto.randomUUID(),
-                title: "Harry Potter and the goblet of fire",
-                description: "Harry Potter finds himself competing in a hazardous tournament between rival schools of magic, but he is distracted by recurring nightmares.",
-                length: "152min",
-                rating: "7.6",
-                seen: false
-            }
+            
         ];
 
         const movies = StoredMovies;
@@ -506,6 +501,7 @@ class MovieUI {
             //MovieStore.addTask(movie);
         })
     }
+    //Get movies from localstorage and send them to UI
     static displayMovies() {
 
         const movies = MovieStore.getMovies();
@@ -514,10 +510,11 @@ class MovieUI {
             MovieUI.addMovieToList(movie);
         })
     }
-
+    //Add movie to UI
     static addMovieToList(movie) {
         const moviesToSee = document.getElementById("movies-to-see");
         const seenMovies = document.getElementById("seen-movies");
+
 
         let card = `
     <div class="col-lg-4" id="card-top">
@@ -526,19 +523,19 @@ class MovieUI {
         <div class="card-header">${movie.title}</div>
         <div class="card-body">
             <div class="row">
-                <div class="col-3 justify-content-center"><img class="img-fit-to-card" src="/Filmbilder/hp2.jpg">
+                <div class="col-3 justify-content-center"><img class="img-fit-to-card" src="${movie.poster}">
                 </div>
                 <div class="col">
-                    <div class="row">
+                    <div class="row">                    
                         <div class="col">
-                            <p>${movie.description.substr(0,60)}....</p>
+                            <p class="movie-plot-trunc">${movie.plot}</p>
                         </div>
 
                     </div>
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-5 no-padding"><img class="icon" src="/Images/clock.png">${movie.length}</div>
-                            <div class="col-5 no-padding"><img class="icon" src="/Images/star.png">${movie.rating}</div>
+                            <div class="col-5 no-padding"><img class="icon" src="/Images/timglas.png">${movie.runtime}</div>
+                            <div class="col-5 no-padding"><img class="icon" src="/Images/star.png">${movie.imdbRating}</div>
                             <div class="col no-padding"><a><img class="icon" src="/Images/Details.png" alt=""></a>
                             </div>
                         </div>
@@ -556,8 +553,46 @@ class MovieUI {
             moviesToSee.innerHTML += card;
         }
     }
+    
 }
 
 class MovieStore {
 
 }
+
+class MovieApi {
+    static async getMovieAsync(movieTitle) {
+        let res = await axios.get(`http://www.omdbapi.com/?apikey=2c40f502&t=${movieTitle}`);
+
+        const rawMovie = res.data;
+        if (rawMovie.Title == undefined) {
+            alert(rawMovie.Error);
+        }
+        else {
+            console.log(rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
+            let movie = new Movie(crypto.randomUUID(), rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
+            MovieUI.addMovieToList(movie);
+            //MovieStore.addMovie();
+        }
+
+    }
+}
+
+//------
+//Events
+//------
+
+//Search movie
+document.getElementById("search-movie-btn").addEventListener("click", (e) => {
+    let movieTitle = document.getElementById("search-movie-title").value.replaceAll(" ","-");
+    
+    //Make api call
+    MovieApi.getMovieAsync(movieTitle);
+
+    //spara datan
+
+    //Skapa en movie
+
+    //Öppna modal
+
+});

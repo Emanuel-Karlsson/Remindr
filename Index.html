@@ -18,13 +18,13 @@
   <div class="container mt-4" id="top-container">
     <!------------TOP MENU-------------->
     <div class="row text-center">
-      <div class="col-1"><a id="add-new-task" data-bs-toggle="modal" data-bs-target="#add-task-modal"><img
-            class="icon-big" src="/Images/add-sign.jpg"></a></div>
-      <div class="col-1 hidden"><a id="add-new-movie" data-bs-toggle="modal" data-bs-target="#add-movie-modal"><img
-            class="icon-big" src="/Images/add-sign.jpg"></a></div>
+      <div class="col-1 hidden"><a id="add-new-task" data-bs-toggle="modal" data-bs-target="#add-task-modal"><img
+            class="icon-big" src="/Images/add.png"></a></div>
+      <div class="col-1"><a id="search-movie" data-bs-toggle="modal" data-bs-target="#search-movie-modal"><img
+            class="icon-big" src="/Images/search.png"></a></div>
 
-      <div class="col display-3" id="remindr">REMINDR</div>
-      <div class="col display-3 hidden" id="filmr">FILMR</div>
+      <div class="col display-3 hidden" id="remindr">REMINDR</div>
+      <div class="col display-3 " id="filmr">FILMR</div>
 
       <div class="col-1 mr-hamburger"><a data-bs-toggle="modal" data-bs-target="#hamburger-modal"><img
             src="/Images/hamburgerMenu.png" class="icon-big"></a></div>
@@ -163,22 +163,47 @@
         </div>
       </div>
     </div>
+    <!---------------SEARCH MOVIE MODAL-------------->
+    <div class="modal fade" id="search-movie-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content h-menu-content" id="search-movie-modal-content">
+          <div class="modal-header" id="modal-header">
+            <h5 class="modal-title">Search movie</h5>
+            <button type="button" class="close btn btn-outline-dark" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&#10006;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="search-movie-title" class="col-form-label">Title:</label>
+              <input type="text" class="form-control" id="search-movie-title">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="search-movie-btn">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <!--Task lists-->
-    <div id="task-section">
+    <div id="task-section" class="hidden">
 
       <!-----------Unfinished Tasks------------>
-      <div class="row mt-4 justify" id="task-list">
+      <div class="row mt-4" id="task-list">
         <h3>Unfinished tasks</h3>
       </div>
 
       <!-----------Finished Tasks------------>
-      <div class="row mt-4 justify" id="finished-task-list">
+      <div class="row mt-4" id="finished-task-list">
         <h3>Finished tasks</h3>
 
       </div>
 
     </div>
-    <div id="movie-section" class="hidden">
+    <div id="movie-section" class="">
 
       <!---------- Movie list - to see------------>
       <div class="row mt-4" id="movie-lists">
@@ -201,6 +226,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
 </body>
 

@@ -29,6 +29,12 @@ p{
 .icon-big{
     height: 40px;
     margin: 5px;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+}
+
+.icon-big:hover{
+    height:60px;
 }
 
 a, input[type="radio"]{
@@ -105,3 +111,22 @@ a, input[type="radio"]{
 .no-padding{
     padding:0px !important;
 }
+
+.display-3 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(100deg, rgb(214, 226, 38), rgb(231, 63, 63), rgb(214, 226, 38)  );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-in-out;
+  }
+  .display-3:hover{
+      font-size: 90px;
+      padding: 0px;
+  }
+
+  /* .movie-plot-trunc{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  } */
