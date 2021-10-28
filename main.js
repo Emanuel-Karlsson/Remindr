@@ -12,9 +12,9 @@ class Task {
 
 
 //-----------
-//UI class
+//TaskUI class
 //-----------
-class UI {
+class TaskUI {
     //Add demo tasks to task list
     static displayDemoTasks() {
         const StoredTasks = [
@@ -59,17 +59,17 @@ class UI {
         const tasks = StoredTasks;
 
         tasks.forEach(task => {
-            UI.addTaskToList(task);
-            Store.addTask(task);
+            TaskUI.addTaskToList(task);
+            TaskStore.addTask(task);
         })
     }
-    //Display book
+    //Display tasks
     static displayTasks() {
 
-        const tasks = Store.getTasks();
+        const tasks = TaskStore.getTasks();
 
         tasks.forEach(task => {
-            UI.addTaskToList(task);
+            TaskUI.addTaskToList(task);
         })
     }
     //Adding task to the list of tasks
@@ -164,7 +164,7 @@ class UI {
         //Change card prio
         taskCard.children[1].children[1].children[0].children[1].children[1].children[0].children[1].innerHTML = updatedTask.prio;
         // //Change card prio img
-        // taskCard.children[1].children[1].children[0].children[1].children[1].children[0].children[0].src = `/images/${updatedTask.prio}`;
+        taskCard.children[1].children[1].children[0].children[1].children[1].children[0].children[0].src = `/images/${updatedTask.prio}.png`;
         //Change card status
         taskCard.children[1].children[1].children[0].children[1].children[2].children[0].children[1].innerHTML = updatedTask.completed;
 
@@ -215,9 +215,9 @@ class UI {
 
 
 //-----------
-//Store class
+//TaskStore class
 //-----------
-class Store {
+class TaskStore {
     //get tasks
     static getTasks() {
         let tasks;
@@ -233,14 +233,14 @@ class Store {
     //Get specific task
     static getSingleTask(taskId) {
 
-        const tasks = Store.getTasks();
+        const tasks = TaskStore.getTasks();
         const task = tasks.find(task => task.id == taskId);
 
         return task;
     }
     //Add task
     static addTask(task) {
-        const tasks = Store.getTasks();
+        const tasks = TaskStore.getTasks();
         tasks.push(task);
         localStorage.setItem("tasks", JSON.stringify(tasks))
     }
@@ -248,7 +248,7 @@ class Store {
     //Delete task
     static deleteTask(clickedTarget) {
         const id = clickedTarget.closest("#card-top").children[0].innerHTML;
-        const tasks = Store.getTasks();
+        const tasks = TaskStore.getTasks();
         tasks.forEach((task, index) => {
             if (task.id == id) {
                 tasks.splice(index, 1);
@@ -260,7 +260,7 @@ class Store {
     //Edit task
     static editTask(oldTask, updatedTask) {
 
-        let tasks = Store.getTasks();
+        let tasks = TaskStore.getTasks();
         const index = tasks.findIndex(task => task.id == oldTask.id);
         tasks.splice(index, 1, updatedTask);
         localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -286,10 +286,9 @@ class Store {
 //----------
 
 //Add demo tasks
-document.getElementById("remindr").addEventListener("click", UI.displayDemoTasks);
+document.getElementById("remindr").addEventListener("click", TaskUI.displayDemoTasks);
 
-//Display tasks
-document.addEventListener("DOMContentLoaded", UI.displayTasks)
+
 
 //Add task
 document.getElementById("add-task-btn").addEventListener("click", (e) => {
@@ -302,26 +301,26 @@ document.getElementById("add-task-btn").addEventListener("click", (e) => {
     const description = document.getElementById("add-task-description").value;
     const startTime = document.getElementById("add-task-start-time").value;
     const endTime = document.getElementById("add-task-end-time").value;
-    const prio = UI.getPrioValue("add");
+    const prio = TaskUI.getPrioValue("add");
     const completed = false;
 
     //Validate
     if (title == "") {
-        UI.showAlert("Title cannot be empty - task has not been added.", "danger");
+        TaskUI.showAlert("Title cannot be empty - task has not been added.", "danger");
     } else if (startTime > endTime) {
-        UI.showAlert("Start time cannot be greater than end time - task has not been added.", "danger");
+        TaskUI.showAlert("Start time cannot be greater than end time - task has not been added.", "danger");
     } else {
         //All good, lets create a task
         let task = new Task(id, title, description, startTime, endTime, prio, completed);
 
         //Add task to UI
-        UI.addTaskToList(task);
+        TaskUI.addTaskToList(task);
 
         //Add task to store
-        Store.addTask(task);
+        TaskStore.addTask(task);
 
         //Clear modal fields
-        UI.clearModalFields();
+        TaskUI.clearModalFields();
 
     }
 
@@ -335,14 +334,14 @@ document.getElementById("task-section").addEventListener("click", (e) => {
     e.preventDefault();
 
     if (e.target.classList.contains("deleteBtn")) {
-        UI.deleteTask(e.target);
-        Store.deleteTask(e.target);
+        TaskUI.deleteTask(e.target);
+        TaskStore.deleteTask(e.target);
     } else if (e.target.classList.contains("editBtn")) {
-        UI.populateEditModal(e.target);
+        TaskUI.populateEditModal(e.target);
     }
     else if (e.target.classList.contains("completeBtn")) {
-        UI.completeTask(e.target);
-        Store.completeTask(e.target);
+        TaskUI.completeTask(e.target);
+        TaskStore.completeTask(e.target);
     }
 
 });
@@ -351,13 +350,13 @@ document.getElementById("task-section").addEventListener("click", (e) => {
 document.getElementById("edit-task-btn").addEventListener("click", (e) => {
     let taskId = document.getElementById("edit-task-id").value;
 
-    let oldTask = Store.getSingleTask(taskId);
+    let oldTask = TaskStore.getSingleTask(taskId);
 
     let updatedTitle = document.getElementById("edit-task-title").value;
     let updatedDescription = document.getElementById("edit-task-description").value;
     let updatedStartTime = document.getElementById("edit-task-start-time").value;
     let updatedEndTime = document.getElementById("edit-task-end-time").value;
-    let updatedPrio = UI.getPrioValue("edit");
+    let updatedPrio = TaskUI.getPrioValue("edit");
     let updatedCompleted = false;
 
     // const updatedTask = new Task(taskId, updatedTitle, updatedDescription, updatedStartTime, updatedEndTime, updatedPrio, updatedCompleted)
@@ -375,10 +374,10 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 
 
     //Change task in localStorage
-    Store.editTask(oldTask, updatedTask);
+    TaskStore.editTask(oldTask, updatedTask);
 
     //Change task in UI
-    UI.editTask(oldTask, updatedTask);
+    TaskUI.editTask(oldTask, updatedTask);
 
 
 
@@ -402,7 +401,13 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+//Display tasks
+document.addEventListener("DOMContentLoaded", applicationStart)
 
+function applicationStart(){
+    TaskUI.displayTasks();
+    MovieUI.displayMovies();
+}
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
     if (e.target.id == "remindr") {
@@ -448,3 +453,44 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Movie{
+    constructor(title, description, length, rating, seen){
+
+    }
+
+}
+
+class MovieUI{
+
+ static displayMovies(){
+
+    const movies = MovieStore.getMovies();
+
+        movies.forEach(movie => {
+            MovieUI.addMovieToList(movie);
+        })
+ }
+
+ static addMovieToList(movie){
+    const moviesToSee = document.getElementById("task-list");
+    const seenMovies = document.getElementById("finished-task-list");
+
+
+    
+
+    let card = `
+    
+`;
+
+    if () {
+        finishedTasks.innerHTML += card;
+    } else {
+        unfinishedTasks.innerHTML += card;
+    }
+ }
+}
+
+class MovieStore{
+
+}

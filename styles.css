@@ -97,4 +97,11 @@ a, input[type="radio"]{
     transition: opacity .20s linear !important;
 }
 
+.img-fit-to-card{
+    height:111px;
+    
+}
 
+.no-padding{
+    padding:0px !important;
+}

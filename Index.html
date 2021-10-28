@@ -18,8 +18,10 @@
   <div class="container mt-4" id="top-container">
     <!------------TOP MENU-------------->
     <div class="row text-center">
-      <div class="col-1"><a  id="add-new-task" data-bs-toggle="modal" data-bs-target="#add-task-modal"><img class="icon-big" src="/Images/add-sign.jpg"></a></div>
-      <div class="col-1 hidden"><a  id="add-new-movie" data-bs-toggle="modal" data-bs-target="#add-movie-modal"><img class="icon-big" src="/Images/add-sign.jpg"></a></div>
+      <div class="col-1"><a id="add-new-task" data-bs-toggle="modal" data-bs-target="#add-task-modal"><img
+            class="icon-big" src="/Images/add-sign.jpg"></a></div>
+      <div class="col-1 hidden"><a id="add-new-movie" data-bs-toggle="modal" data-bs-target="#add-movie-modal"><img
+            class="icon-big" src="/Images/add-sign.jpg"></a></div>
 
       <div class="col display-3" id="remindr">REMINDR</div>
       <div class="col display-3 hidden" id="filmr">FILMR</div>
@@ -163,29 +165,35 @@
     </div>
     <!--Task lists-->
     <div id="task-section">
-      
-        <!-----------Unfinished Tasks------------>
-        <div class="row mt-4 justify" id="task-list">
-          <h3>Unfinished tasks</h3>
-        </div>
 
-        <!-----------Finished Tasks------------>
-        <div class="row mt-4 justify" id="finished-task-list">
-          <h3>Finished tasks</h3>
+      <!-----------Unfinished Tasks------------>
+      <div class="row mt-4 justify" id="task-list">
+        <h3>Unfinished tasks</h3>
+      </div>
 
-        </div>
-      
+      <!-----------Finished Tasks------------>
+      <div class="row mt-4 justify" id="finished-task-list">
+        <h3>Finished tasks</h3>
+
+      </div>
+
     </div>
     <div id="movie-section" class="hidden">
 
       <!---------- Movie list - to see------------>
-      <div class="row mt-4 justify" id="movie-list">
-        <h3>Movies to see:</h3>
-      </div>
-      <!---------- Movie list - seen------------>
-      <div class="row mt-4 justify" id="movie-list">
-        <h3>Seen movies:</h3>
+      <div class="row mt-4" id="movie-lists">
 
+        <div class="row mt-4 justify" id="movies-to-see">
+          <h3>Movies to see:</h3>
+
+        </div>
+
+
+        <!---------- Movie list - seen------------>
+        <div class="row mt-4 justify" id="seen-movies">
+          <h3>Seen movies:</h3>
+
+        </div>
       </div>
     </div>
   </div>
