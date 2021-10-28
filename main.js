@@ -145,7 +145,6 @@ class UI {
     }
     //Delete task
     static deleteTask(clickedElement) {
-        console.log(clickedElement);
         if (clickedElement.classList.contains("deleteBtn")) {
             clickedElement.closest("#card-top").remove();
         }
@@ -153,9 +152,9 @@ class UI {
     //Edit Task
     static editTask(oldTask, updatedTask) {
         let taskCard = document.getElementById(oldTask.id).closest("#card-top");
+
         //Change card title
         taskCard.children[1].children[0].innerHTML = updatedTask.title;
-        console.log(taskCard.children[1].children[0].innerHTML)
         //Change card description
         taskCard.children[1].children[1].children[0].children[0].children[0].innerHTML = updatedTask.description;
         //Change card start time
@@ -228,12 +227,16 @@ class Store {
             tasks = JSON.parse(localStorage.getItem("tasks"));
         }
 
-        tasks = tasks.sort((a, b) => a.startTime > b.startTime ? 1 : -1)
+        //tasks = tasks.sort((a, b) => a.startTime > b.startTime ? 1 : -1)
         return tasks;
     }
     //Get specific task
     static getSingleTask(taskId) {
-        return Store.getTasks().find(task => task.id == taskId);
+
+        const tasks = Store.getTasks();
+        const task = tasks.find(task => task.id == taskId);
+
+        return task;
     }
     //Add task
     static addTask(task) {
@@ -245,7 +248,6 @@ class Store {
     //Delete task
     static deleteTask(clickedTarget) {
         const id = clickedTarget.closest("#card-top").children[0].innerHTML;
-        console.log(id)
         const tasks = Store.getTasks();
         tasks.forEach((task, index) => {
             if (task.id == id) {
@@ -257,10 +259,9 @@ class Store {
     }
     //Edit task
     static editTask(oldTask, updatedTask) {
-        console.log(updatedTask);
-        let tasks = Store.getTasks();
-        const index = tasks.findIndex(task => task.id = oldTask.Id);
 
+        let tasks = Store.getTasks();
+        const index = tasks.findIndex(task => task.id == oldTask.id);
         tasks.splice(index, 1, updatedTask);
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
@@ -352,7 +353,6 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 
     let oldTask = Store.getSingleTask(taskId);
 
-    //let taskCard = 
     let updatedTitle = document.getElementById("edit-task-title").value;
     let updatedDescription = document.getElementById("edit-task-description").value;
     let updatedStartTime = document.getElementById("edit-task-start-time").value;
@@ -360,7 +360,19 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
     let updatedPrio = UI.getPrioValue("edit");
     let updatedCompleted = false;
 
-    const updatedTask = new Task(taskId, updatedTitle, updatedDescription, updatedStartTime, updatedEndTime, updatedPrio, updatedCompleted)
+    // const updatedTask = new Task(taskId, updatedTitle, updatedDescription, updatedStartTime, updatedEndTime, updatedPrio, updatedCompleted)
+    const updatedTask =
+    {
+        id: taskId,
+        title: updatedTitle,
+        description: updatedDescription,
+        startTime: updatedStartTime,
+        endTime: updatedEndTime,
+        prio: updatedPrio,
+        completed: updatedCompleted
+    }
+
+
 
     //Change task in localStorage
     Store.editTask(oldTask, updatedTask);
@@ -393,7 +405,7 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
-    if(e.target.id == "remindr"){
+    if (e.target.id == "remindr") {
         document.getElementById("task-section").classList.remove("hidden");
         document.getElementById("movie-section").classList.add("hidden");
 
@@ -403,7 +415,7 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
         document.getElementById("add-new-movie").parentElement.classList.add("hidden");
         document.getElementById("add-new-task").parentElement.classList.remove("hidden");
 
-    }else if(e.target.id == "filmr"){
+    } else if (e.target.id == "filmr") {
         document.getElementById("task-section").classList.add("hidden");
         document.getElementById("movie-section").classList.remove("hidden");
 
