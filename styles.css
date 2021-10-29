@@ -26,6 +26,15 @@ p{
     margin: 5px;
 }
 
+.icon-medium{
+    height: 30px;
+    margin: 5px;
+}
+.icon-medium:hover{
+    height:40px;
+    margin: 0px;
+}
+
 .icon-big{
     height: 40px;
     margin: 5px;
@@ -70,7 +79,7 @@ a, input[type="radio"]{
 }
 
 .hidden{
-    display: none;
+    display: none !important;
 }
 
 .float-right{
@@ -104,7 +113,7 @@ a, input[type="radio"]{
 }
 
 .img-fit-to-card{
-    height:111px;
+    height:60px;
     
 }
 
@@ -125,8 +134,30 @@ a, input[type="radio"]{
       padding: 0px;
   }
 
-  /* .movie-plot-trunc{
-      white-space: nowrap;
+  .movie-plot-trunc{
+      /* white-space:nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
-  } */
+      text-overflow: ellipsis; */
+
+      width: 90%;
+
+      line-height: 20px;
+      height: 60px;
+      -webkit-box-orient: vertical;
+      display: block;
+      display: -webkit-box;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      -webkit-line-clamp: 3;      
+  }
+
+  .movie-title-trunc{
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    text-align: center;
+  }
+ #add-movie-poster{
+     height: 300px;
+ }
+

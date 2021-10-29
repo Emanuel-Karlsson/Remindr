@@ -406,7 +406,7 @@ document.addEventListener("DOMContentLoaded", applicationStart)
 
 function applicationStart() {
     TaskUI.displayTasks();
-    MovieUI.displayDemoMovies();
+    MovieUI.displayMovies();
 }
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
@@ -491,7 +491,63 @@ class MovieUI {
                 imdbVotes: 806041,
                 seen: false
             },
-            
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the deathly hallows pt2",
+                released: "15 Jul 2011",
+                runtime: "130min",
+                genre: "Adventure, Fantasy, Mystery",
+                director: "David Yates",
+                actors: "Daniel Radcliffe, Emma Watson, Rupert Grint",
+                plot: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+                poster: "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                imdbRating: "8.1",
+                imdbVotes: 806041,
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the deathly hallows pt2",
+                released: "15 Jul 2011",
+                runtime: "130min",
+                genre: "Adventure, Fantasy, Mystery",
+                director: "David Yates",
+                actors: "Daniel Radcliffe, Emma Watson, Rupert Grint",
+                plot: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+                poster: "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                imdbRating: "8.1",
+                imdbVotes: 806041,
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the deathly hallows pt2",
+                released: "15 Jul 2011",
+                runtime: "130min",
+                genre: "Adventure, Fantasy, Mystery",
+                director: "David Yates",
+                actors: "Daniel Radcliffe, Emma Watson, Rupert Grint",
+                plot: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+                poster: "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                imdbRating: "8.1",
+                imdbVotes: 806041,
+                seen: false
+            },
+            {
+                id: crypto.randomUUID(),
+                title: "Harry Potter and the deathly hallows pt2",
+                released: "15 Jul 2011",
+                runtime: "130min",
+                genre: "Adventure, Fantasy, Mystery",
+                director: "David Yates",
+                actors: "Daniel Radcliffe, Emma Watson, Rupert Grint",
+                plot: "Harry, Ron, and Hermione search for Voldemort's remaining Horcruxes in their effort to destroy the Dark Lord as the final battle rages on at Hogwarts.",
+                poster: "https://m.media-amazon.com/images/M/MV5BMGVmMWNiMDktYjQ0Mi00MWIxLTk0N2UtN2ZlYTdkN2IzNDNlXkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg",
+                imdbRating: "8.1",
+                imdbVotes: 806041,
+                seen: false
+            },
+
         ];
 
         const movies = StoredMovies;
@@ -517,34 +573,36 @@ class MovieUI {
 
 
         let card = `
-    <div class="col-lg-4" id="card-top">
-    <p hidden id="${movie.id}">${movie.id}</p>
-    <div class="card border">
-        <div class="card-header">${movie.title}</div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-3 justify-content-center"><img class="img-fit-to-card" src="${movie.poster}">
-                </div>
-                <div class="col">
-                    <div class="row">                    
-                        <div class="col">
-                            <p class="movie-plot-trunc">${movie.plot}</p>
-                        </div>
+        <div class="col-xl-4 col-lg-4 col-md-6" id="card-top">
+        <p hidden id="${movie.id}">${movie.id}</p>
+        <div class="card border">
 
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-5 no-padding"><img class="icon" src="/Images/timglas.png">${movie.runtime}</div>
-                            <div class="col-5 no-padding"><img class="icon" src="/Images/star.png">${movie.imdbRating}</div>
-                            <div class="col no-padding"><a><img class="icon" src="/Images/Details.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <div class="row card-header ">
+          <div id="test1" class="col no-padding text-start"><img onmouseenter="MovieUI.hover(this)" onmouseleave="MovieUI.unhover(this)" class="icon-medium" src="/Images/not-seen.png"></div>
+          <div class="col-8 no-padding movie-title-trunc">${movie.title}</div>
+          <div class="col no-padding text-end"><img class="icon-medium" id="deleteMovieBtn" src="/Images/trash.png"></div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-2"><img class="img-fit-to-card"
+                  src="${movie.poster}">
+              </div>
+              <div class="col-10">
+                <p class="movie-plot-trunc">${movie.plot}</p>
+              </div>
             </div>
+          </div>
+          <div class="card-footer">
+            <div class="row">
+              <div class="col no-padding"><img class="icon-medium" src="/Images/hourglass.png">${movie.runtime}</div>
+              <div class="col no-padding text-center"><img class="icon-medium" src="/Images/rating.png">${movie.imdbRating}/10</div>
+              <div class="col no-padding text-end"><a><img class="icon-medium" id="movie-details" data-bs-toggle="modal"
+              data-bs-target="#add-movie-modal" src="/Images/info.png" alt="">Details</a>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 `;
 
         if (movie.seen) {
@@ -553,28 +611,95 @@ class MovieUI {
             moviesToSee.innerHTML += card;
         }
     }
-    
+
+    //Populates add-movie-modal
+    static populateAddMovieModal(movie, instructions) {
+        if (movie.title == undefined) {
+
+            //Hides movie info fields and add-button
+            document.getElementById("add-movie-info").classList.add("hidden");
+            document.getElementById("add-movie-btn").classList.add("hidden");
+
+            //Shows error message
+            let error = document.getElementById("add-movie-error-message");
+            error.classList.remove("hidden");
+            error.innerText = rawMovie.Error;
+        }
+        else {
+
+            //Hides error message field
+            document.getElementById("add-movie-error-message").classList.add("hidden");
+
+            //Shows move info fields and add-button
+            document.getElementById("add-movie-info").classList.remove("hidden");
+            document.getElementById("add-movie-btn").classList.remove("hidden");
+
+            //Added instructionsparameter to be able to use the same modal for showing movie details as adding movie to movie list.
+            if (instructions == "details") {
+                document.getElementById("add-movie-btn").classList.add("hidden");
+            }
+
+            //Populating modal with movie info
+            document.getElementById("add-movie-info").children[0].id = movie.id;
+            document.getElementById("add-movie-poster").src = movie.poster;
+            document.getElementById("add-movie-runtime").innerText = movie.runtime;
+            document.getElementById("add-movie-imdbRating").innerText = movie.imdbRating;
+            document.getElementById("add-movie-imdbVotes").innerText = movie.imdbVotes;
+            document.getElementById("add-movie-title").innerText = movie.title;
+            document.getElementById("add-movie-plot").innerText = movie.plot;
+            document.getElementById("add-movie-released").innerText = movie.released;
+            document.getElementById("add-movie-genre").innerText = movie.genre;
+            document.getElementById("add-movie-actors").innerText = movie.actors;
+            document.getElementById("add-movie-director").innerText = movie.director;
+        }
+    }
+
+    static hover(element) {
+        element.setAttribute('src', '/Images/seen.png');
+        element.style.height = "35px";
+        element.style.margin = "0px";
+      }
+      
+      static unhover(element) {
+        element.setAttribute('src', '/Images/not-seen.png');
+        element.style.height = "30px";
+        element.style.margin = "5px";
+
+      }
 }
 
 class MovieStore {
+    static getMovies() {
+        let movies;
+        if (localStorage.getItem("movies") === null) {
+            movies = [];
+        } else {
+            movies = JSON.parse(localStorage.getItem("movies"));
+        }
+        return movies;
+    }
+    //Get specific task
+    static getSingleMovie(movieId) {
 
+        const movies = MovieStore.getMovies();
+        const movie = movies.find(movie => movie.id == movieId);
+
+        return movie;
+    }
+    //Add task
+    static addMovie(movie) {
+        const movies = MovieStore.getMovies();
+        movies.push(movie);
+        localStorage.setItem("movies", JSON.stringify(movies))
+    }
 }
 
 class MovieApi {
     static async getMovieAsync(movieTitle) {
         let res = await axios.get(`http://www.omdbapi.com/?apikey=2c40f502&t=${movieTitle}`);
-
         const rawMovie = res.data;
-        if (rawMovie.Title == undefined) {
-            alert(rawMovie.Error);
-        }
-        else {
-            console.log(rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
-            let movie = new Movie(crypto.randomUUID(), rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
-            MovieUI.addMovieToList(movie);
-            //MovieStore.addMovie();
-        }
-
+        let movie = new Movie(crypto.randomUUID(), rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.Actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
+        MovieUI.populateAddMovieModal(movie, "");
     }
 }
 
@@ -582,17 +707,47 @@ class MovieApi {
 //Events
 //------
 
+//Add movie
+document.getElementById("add-movie-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    const id = document.getElementById("add-movie-info").children[0].id;
+    const poster = document.getElementById("add-movie-poster").src;
+    const runtime = document.getElementById("add-movie-runtime").innerText;
+    const imdbRating = document.getElementById("add-movie-imdbRating").innerText;
+    const imdbVotes = document.getElementById("add-movie-imdbVotes").innerText;
+    const title = document.getElementById("add-movie-title").innerText;
+    const plot = document.getElementById("add-movie-plot").innerText;
+    const released = document.getElementById("add-movie-released").innerText
+    const genre = document.getElementById("add-movie-genre").innerText
+    const actors = document.getElementById("add-movie-actors").innerText;
+    const director = document.getElementById("add-movie-director").innerText;
+
+
+    let movie = new Movie(id, title, released, runtime, genre, director, actors, plot, poster, imdbRating, imdbVotes);
+
+    MovieUI.addMovieToList(movie);
+    MovieStore.addMovie(movie);
+
+});
 //Search movie
 document.getElementById("search-movie-btn").addEventListener("click", (e) => {
-    let movieTitle = document.getElementById("search-movie-title").value.replaceAll(" ","-");
-    
+    e.preventDefault();
+    const movieTitle = document.getElementById("search-movie-title").value;
     //Make api call
     MovieApi.getMovieAsync(movieTitle);
 
-    //spara datan
-
-    //Skapa en movie
-
-    //Öppna modal
 
 });
+
+//Movie details
+document.getElementById("movie-lists").addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.id == "movie-details") {
+        let movieId = target.closest("#card-top").children[0].id;
+        let movie = MovieStore.getSingleMovie(movieId);
+        MovieUI.populateAddMovieModal(movie, "details");
+    }
+
+
+});
+

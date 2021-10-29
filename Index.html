@@ -181,12 +181,70 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="search-movie-btn">Search</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal"
+              data-bs-target="#add-movie-modal" id="search-movie-btn">Search</button>
           </div>
         </div>
       </div>
     </div>
-
+    <!--ADD MOVIE/SHOW DETAILS MODAL-->
+    <div class="modal fade" id="add-movie-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content h-menu-content" id="add-movie-modal-content">
+          <div class="modal-body">
+            <h1 class="hidden" id="add-movie-error-message"></h1>
+            <div id="add-movie-info">
+              <div id="" class="hidden"></div>
+              <!--placeholder movie id-->
+              <div class="row">
+                <div class="col text-center">
+                  <img id="add-movie-poster" class="testar" src="">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <img id="add-movie-runtime-icon" src="/Images/timglas.png" class="icon">
+                    <span id="add-movie-runtime"></span>
+                  </div>
+                </div>
+                <div class="col text-end">
+                  <img id="add-movie-rating-icon" src="/Images/star.png" class="icon">
+                  <span id="add-movie-imdbRating"></span>
+                  <span>(<span id="add-movie-imdbVotes"></span>)</span>
+                  
+                </div>
+              </div>
+              <div class="row">
+                <h1 id="add-movie-title"></h1>
+              </div>
+              <div class="row">
+                <p id="add-movie-plot"></p>
+              </div>
+              <div class="row">
+                <p>Released: <span id="add-movie-released"></span></p>
+              </div>
+              <div class="row">
+                <p>Genre: <span id="add-movie-genre"></span></p>
+              </div>
+              <div class="row">
+                <p>Actors: <span id="add-movie-actors"></span></p>
+              </div>
+              <div class="row">
+                <p>Director: <span id="add-movie-director"></span></p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col" id="add-movie-btn"><button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Add</button></div>
+            <div class="col"><button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal" id="close-add-movie-modal-btn">Close</button></div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--Task lists-->
     <div id="task-section" class="hidden">
@@ -226,9 +284,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
 </body>
 
 
 </html>
+
