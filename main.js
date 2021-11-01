@@ -570,6 +570,11 @@ class MovieUI {
     static addMovieToList(movie) {
         const moviesToSee = document.getElementById("movies-to-see");
         const seenMovies = document.getElementById("seen-movies");
+        let movieStatus = "unseen";
+
+        if (movie.seen) {
+            movieStatus = "seen"
+        }
 
 
         let card = `
@@ -578,7 +583,7 @@ class MovieUI {
         <div class="card border">
 
           <div class="row card-header ">
-          <div id="test1" class="col no-padding text-start"><img onmouseenter="MovieUI.hover(this)" onmouseleave="MovieUI.unhover(this)" class="icon-medium" src="/Images/not-seen.png"></div>
+          <div class="col no-padding text-start"><img id="movie-status" onmouseenter="MovieUI.hover(this)" onmouseleave="MovieUI.unhover(this)" class="icon-medium" src="/Images/${movieStatus}.png"></div>
           <div class="col-8 no-padding movie-title-trunc">${movie.title}</div>
           <div class="col no-padding text-end"><img class="icon-medium" id="deleteMovieBtn" src="/Images/trash.png"></div>
           </div>
@@ -653,19 +658,46 @@ class MovieUI {
             document.getElementById("add-movie-director").innerText = movie.director;
         }
     }
+    //Deleting movie from UI
+    static deleteMovie(target) {
+        let card = target.closest("#card-top");
+        card.remove();
+    }
+    //Updateing movie in UI
+    static updateMovie(clickedTarget) {
+        let card = clickedTarget.closest("#card-top");
+        card.children[1].children[0].children[0].children[0].src = "/images/seen.png";
+        card.remove();
+        let seenMovies = document.getElementById("seen-movies");
+        seenMovies.appendChild(card);
+    }
 
     static hover(element) {
-        element.setAttribute('src', '/Images/seen.png');
-        element.style.height = "35px";
-        element.style.margin = "0px";
-      }
-      
-      static unhover(element) {
-        element.setAttribute('src', '/Images/not-seen.png');
+        let movieId = element.closest("#card-top").children[0].id;
+        const movie = MovieStore.getSingleMovie(movieId);
+        if (movie.seen == false) {
+            element.setAttribute('src', '/Images/seen.png');
+            element.style.height = "35px";
+            element.style.margin = "0px";
+        }
+
+
+    }
+
+    static unhover(element) {
+
+        //Kolla om filmer är sett (seen == true)
+        let movieId = element.closest("#card-top").children[0].id;
+        const movie = MovieStore.getSingleMovie(movieId);
+        if (movie.seen == false) {
+            element.setAttribute('src', '/Images/unseen.png');
+
+        }
         element.style.height = "30px";
         element.style.margin = "5px";
 
-      }
+
+    }
 }
 
 class MovieStore {
@@ -691,6 +723,32 @@ class MovieStore {
         const movies = MovieStore.getMovies();
         movies.push(movie);
         localStorage.setItem("movies", JSON.stringify(movies))
+    }
+    static deleteMovie(target) {
+
+        let movieId = target.closest("#card-top").children[0].id;
+        let movie = this.getSingleMovie(movieId);
+
+
+        const id = target.closest("#card-top").children[0].id;
+        let movies = this.getMovies();
+        movies.forEach((movie, index) => {
+            if (movie.id == id) {
+                movies.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem("movies", JSON.stringify(movies));
+
+    }
+    static updateMovie(target) {
+        let movies = this.getMovies();
+        let movieId = target.closest("#card-top").children[0].id;
+        let index = movies.findIndex(movie => movie.id == movieId)
+        let movie = this.getSingleMovie(movieId);
+        movie.seen = true;
+        movies.splice(index, 1, movie);
+        localStorage.setItem("movies", JSON.stringify(movies));
     }
 }
 
@@ -746,6 +804,14 @@ document.getElementById("movie-lists").addEventListener("click", (e) => {
         let movieId = target.closest("#card-top").children[0].id;
         let movie = MovieStore.getSingleMovie(movieId);
         MovieUI.populateAddMovieModal(movie, "details");
+    } else if (target.id == ("deleteMovieBtn")) {
+        MovieUI.deleteMovie(target);
+        MovieStore.deleteMovie(target);
+    } else if (target.id == "movie-status") {
+        //let testMovie = MovieStore.getSingleMovie(target.closest("#card-top").children[0].id)
+
+        MovieUI.updateMovie(target);
+        MovieStore.updateMovie(target);
     }
 
 
