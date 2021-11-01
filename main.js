@@ -77,9 +77,11 @@ class TaskUI {
         const unfinishedTasks = document.getElementById("task-list");
         const finishedTasks = document.getElementById("finished-task-list");
         let status;
+        let disableButtonClass = "";
 
         if (task.completed) {
             status = "Completed"
+            disableButtonClass = "disabled"
         } else {
             status = "Not completed"
         }
@@ -104,13 +106,13 @@ class TaskUI {
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    
                         <div class="row">
-                            <div class="col border-rounded-left"><a class="btn btn-outline-light completeBtn">Complete</a></div>
-                            <div class="col border"><button class="btn btn-outline-light editBtn" data-bs-toggle="modal" data-bs-target="#edit-task-modal">Edit</button></div>
+                            <div class="col border-rounded-left"><a class="btn btn-outline-light ${disableButtonClass} completeBtn">Complete</a></div>
+                            <div class="col border"><button class="btn btn-outline-light ${disableButtonClass} editBtn" data-bs-toggle="modal" data-bs-target="#edit-task-modal">Edit</button></div>
                             <div class="col border-rounded-right"><button class="btn btn-outline-light deleteBtn">Delete</button></div>
                         </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -172,9 +174,11 @@ class TaskUI {
     //Complete task
     static completeTask(clickedTarget) {
         let card = clickedTarget.closest("#card-top");
-        const cardTaskId = card.children[0].innerHTML;
         card.children[1].children[1].children[0].children[1].children[2].children[0].children[0].src = "/images/true.png";
         card.children[1].children[1].children[0].children[1].children[2].children[0].children[1].innerHTML = "Completed";
+        clickedTarget.classList.add("disabled");
+        //clickedTarget.NextElementSibling.children[0].classList.add("disabled");
+        clickedTarget.parentElement.nextElementSibling.children[0].classList.add("disabled");
 
         card.remove();
         let finishedTasks = document.getElementById("finished-task-list");
