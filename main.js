@@ -411,7 +411,25 @@ document.addEventListener("DOMContentLoaded", applicationStart)
 function applicationStart() {
     TaskUI.displayTasks();
     MovieUI.displayMovies();
+
 }
+setInterval(() => {
+    let today = new Date();
+    let hr = today.getMinutes();
+    console.log(hr);
+    if (hr % 2 == 0) {
+        document.body.style.backgroundImage = `url("https://www.desktopbackground.org/download/o/2014/05/28/769561_wallpapers-dream-theater-descargar-imagenes-en-hd-de-todo-un-poco_1920x1200_h.jpg")`
+    }
+
+    else {
+        document.body.style.backgroundImage = `url("https://images6.alphacoders.com/438/thumb-1920-438947.jpg")`
+    }
+}, 1000);
+
+
+
+
+
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
     if (e.target.id == "remindr") {
@@ -435,6 +453,11 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
         document.getElementById("add-new-task").parentElement.classList.add("hidden");
     }
 });
+
+
+
+
+
 // //Click event of everything for debugging
 // document.querySelector(".container").addEventListener("click", (e) => {
 //     console.log(e.target);

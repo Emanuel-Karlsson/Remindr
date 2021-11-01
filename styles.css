@@ -4,13 +4,38 @@ body {
     font-family: 'Roboto', sans-serif !important;   
     /* background-image: url("https://www.desktopbackground.org/download/o/2014/05/28/769561_wallpapers-dream-theater-descargar-imagenes-en-hd-de-todo-un-poco_1920x1200_h.jpg"); */
     
+    /* background-image: url("https://img.wallpapersafari.com/desktop/1920/1080/89/38/TvWLhF.jpg"); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     
 }
 
+#task-list{
+    background: rgba(32, 32, 29, 0.7) !important;
+    border-radius: 30px;
+    padding: 30px;
+}
+#finished-task-list{
+    background: rgba(32, 32, 29, 0.7) !important;
+    border-radius: 30px;
+    padding: 30px;
+}
+#movies-to-see{
+    background: rgba(32, 32, 29, 0.7) !important;
+    border-radius: 30px;
+    padding: 30px;
+}
+#seen-movies{
+    background: rgba(32, 32, 29, 0.7) !important;
+    border-radius: 30px;
+    padding: 30px;
+}
 .card{
-    background-color: #52524A !important;
+    background-color: rgba(32, 32, 29, 0.7) !important;
     border-radius: 10px !important; 
     margin-bottom: 20px !important;
+    
+    
 }
 
 .card-header{    
@@ -136,7 +161,7 @@ a, input[type="radio"]{
       padding: 0px;
   }
   .display-7{
-    font-weight: bolder;
+    font-weight:bolder !important;
     background: -webkit-linear-gradient(100deg, rgb(214, 226, 38), rgb(231, 63, 63),rgb(214, 226, 38) );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
