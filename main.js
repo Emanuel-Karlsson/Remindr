@@ -105,14 +105,12 @@ class TaskUI {
                                 <div class="col"><img src="/Images/${task.completed}.png" class="icon"> <span>${status}</span></div>
                             </div>
                         </div>
-                    </div>
-                    
-                        <div class="row">
-                            <div class="col border-rounded-left"><a class="btn btn-outline-light ${disableButtonClass} completeBtn">Complete</a></div>
-                            <div class="col border"><button class="btn btn-outline-light ${disableButtonClass} editBtn" data-bs-toggle="modal" data-bs-target="#edit-task-modal">Edit</button></div>
-                            <div class="col border-rounded-right"><button class="btn btn-outline-light deleteBtn">Delete</button></div>
-                        </div>
-                    
+                    </div>                    
+                    <div class="row">                        
+                        <div class="col border-rounded-left"><a class="btn btn-outline-light ${disableButtonClass} completeBtn">Complete</a></div>
+                        <div class="col border"><button class="btn btn-outline-light ${disableButtonClass} editBtn" data-bs-toggle="modal" data-bs-target="#edit-task-modal">Edit</button></div>
+                        <div class="col border-rounded-right"><button class="btn btn-outline-light deleteBtn">Delete</button></div>                            
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -177,7 +175,6 @@ class TaskUI {
         card.children[1].children[1].children[0].children[1].children[2].children[0].children[0].src = "/images/true.png";
         card.children[1].children[1].children[0].children[1].children[2].children[0].children[1].innerHTML = "Completed";
         clickedTarget.classList.add("disabled");
-        //clickedTarget.NextElementSibling.children[0].classList.add("disabled");
         clickedTarget.parentElement.nextElementSibling.children[0].classList.add("disabled");
 
         card.remove();
@@ -292,8 +289,6 @@ class TaskStore {
 //Add demo tasks
 document.getElementById("remindr").addEventListener("click", TaskUI.displayDemoTasks);
 
-
-
 //Add task
 document.getElementById("add-task-btn").addEventListener("click", (e) => {
     //Prevent actual submit
@@ -405,14 +400,17 @@ document.getElementById("edit-task-btn").addEventListener("click", (e) => {
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-//Display tasks
+//Startup/reload event
 document.addEventListener("DOMContentLoaded", applicationStart)
 
+//Functions run at app startup/reload
 function applicationStart() {
     TaskUI.displayTasks();
     MovieUI.displayMovies();
 
 }
+
+//Changing the background every minute. Meant to change depending on time of day (day/night), but that doesn't make sense in this project.
 setInterval(() => {
     let today = new Date();
     let hr = today.getMinutes();
@@ -425,10 +423,6 @@ setInterval(() => {
         document.body.style.backgroundImage = `url("https://images6.alphacoders.com/438/thumb-1920-438947.jpg")`
     }
 }, 1000);
-
-
-
-
 
 //Switch between Remindr och Filmr
 document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) => {
@@ -453,15 +447,6 @@ document.getElementById("hamburger-menu-buttons").addEventListener("click", (e) 
         document.getElementById("add-new-task").parentElement.classList.add("hidden");
     }
 });
-
-
-
-
-
-// //Click event of everything for debugging
-// document.querySelector(".container").addEventListener("click", (e) => {
-//     console.log(e.target);
-// })
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -647,7 +632,7 @@ class MovieUI {
     //Populates add-movie-modal
     static populateAddMovieModal(movie, instructions) {
         if (movie.title == undefined) {
-
+            
             //Hides movie info fields and add-button
             document.getElementById("add-movie-info").classList.add("hidden");
             document.getElementById("add-movie-btn").classList.add("hidden");
@@ -655,7 +640,7 @@ class MovieUI {
             //Shows error message
             let error = document.getElementById("add-movie-error-message");
             error.classList.remove("hidden");
-            error.innerText = rawMovie.Error;
+            error.innerText = instructions;            
         }
         else {
 
@@ -707,8 +692,6 @@ class MovieUI {
             element.style.height = "35px";
             element.style.margin = "0px";
         }
-
-
     }
 
     static unhover(element) {
@@ -784,7 +767,7 @@ class MovieApi {
         let res = await axios.get(`http://www.omdbapi.com/?apikey=2c40f502&t=${movieTitle}`);
         const rawMovie = res.data;
         let movie = new Movie(crypto.randomUUID(), rawMovie.Title, rawMovie.Released, rawMovie.Runtime, rawMovie.Genre, rawMovie.Director, rawMovie.Actors, rawMovie.Plot, rawMovie.Poster, rawMovie.imdbRating, rawMovie.imdbVotes);
-        MovieUI.populateAddMovieModal(movie, "");
+        MovieUI.populateAddMovieModal(movie, rawMovie.Error);
     }
 }
 
@@ -818,6 +801,7 @@ document.getElementById("add-movie-btn").addEventListener("click", (e) => {
 document.getElementById("search-movie-btn").addEventListener("click", (e) => {
     e.preventDefault();
     const movieTitle = document.getElementById("search-movie-title").value;
+    document.getElementById("search-movie-title").value = null;
     //Make api call
     MovieApi.getMovieAsync(movieTitle);
 
